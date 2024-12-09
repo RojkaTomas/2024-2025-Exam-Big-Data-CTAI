@@ -1,0 +1,79 @@
+{
+  "index_patterns": "books_dataset*",
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 2
+    },
+    "mappings": {
+      "properties": {
+          "book": {
+            "properties": {
+              "author": {
+                "type": "keyword"
+              },
+              "image_urls": {
+                "properties": {
+                  "large": {
+                    "type": "keyword"
+                  },
+                  "medium": {
+                    "type": "keyword"
+                  },
+                  "small": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "isbn": {
+                "type": "keyword"
+              },
+              "publisher": {
+                "type": "keyword"
+              },
+              "title": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "year_of_publication": {
+                "type": "integer"
+              }
+            }
+          },
+          "book_rating": {
+            "type": "integer"
+          },
+          "user": {
+            "properties": {
+              "age": {
+                "type": "integer",
+                "null_value": -1
+              },
+              "city": {
+                "type": "keyword"
+              },
+              "country": {
+                "type": "keyword"
+              },
+              "state": {
+                "type": "keyword"
+              },
+              "user_id": {
+                "type": "long"
+              }
+            }
+          }
+      }
+    }
+  },
+  "priority": 100,
+  "version": 1,
+  "_meta": {
+    "description": "Template for the books dataset index."
+  }
+}

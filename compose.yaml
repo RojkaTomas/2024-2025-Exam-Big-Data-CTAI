@@ -38,18 +38,20 @@ services:
 
 
   logstash:
-      user: root
-      image: docker.elastic.co/logstash/logstash:8.16.1
-      entrypoint: [ "sh", "-c", "sleep 2073600" ]
-      depends_on:
-        elasticsearch:
-          condition: service_healthy
-      environment:
-        - "xpack.monitoring.enabled=false"
-      command: logstash -f pipeline/books.conf --config.reload.automatic
-      volumes:
-          - ./logstash/pipeline:/usr/share/logstash/pipeline
-          - ./logstash/data/:/usr/share/logstash/data/
+    user: root
+    image: docker.elastic.co/logstash/logstash:8.16.1
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      - "xpack.monitoring.enabled=false"
+    command: logstash -f pipeline/books.conf --config.reload.automatic --log.level=debug
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/data/:/usr/share/logstash/data/
+      - ./logstash/logs:/usr/share/logstash/logs
+
+
 
 volumes:
   es:
